@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Animated } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image } from 'react-native';
 
-const HockeyHome = () => {
+const HockeyGame = ({ navigation }) => {
   const [shotsHome, setShotsHome] = useState(0);
   const [shotOnNetHome, setShotsOnNetHome] = useState(0);
   const [goalHome, setGoalHome] = useState(0);
@@ -9,120 +9,58 @@ const HockeyHome = () => {
   const [shotOnNetAway, setShotsOnNetAway] = useState(0);
   const [goalAway, setGoalAway] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const [decrementFunction, setDecrementFunction] = useState(null);
-  const [decrementIndex, setDecrementIndex] = useState(null); // New state to store the index of the item being decremented
+  const [decrementIndex, setDecrementIndex] = useState(null); // New state variable
 
-  // Animated values for opacity
-  const animatedOpacities = [
-    useRef(new Animated.Value(1)).current,
-    useRef(new Animated.Value(1)).current,
-    useRef(new Animated.Value(1)).current,
-    useRef(new Animated.Value(1)).current,
-    useRef(new Animated.Value(1)).current,
-    useRef(new Animated.Value(1)).current,
-  ];
-
-  const handleIncrement = (setter, index) => {
+  const handleIncrement = (setter) => {
     setter((prev) => prev + 1);
-    animateOpacity(index);
   };
 
-  const handleDecrement = (index, setter) => { // Modified handleDecrement to accept index and setter
-    setDecrementFunction(() => setter);
+  const handleDecrement = (index) => {
     setDecrementIndex(index);
     setShowModal(true);
   };
-
-  const animateOpacity = (index) => {
-    const adjustedIndex = index % 3; // Ensure index is within range [0, 2]
-    Animated.sequence([
-      Animated.timing(animatedOpacities[adjustedIndex * 2], {
-        toValue: 0.3,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(animatedOpacities[adjustedIndex * 2], {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-  
-
-  const confirmDecrement = () => {
-    console.log("Confirm decrement called");
-    console.log("Decrement function:", decrementFunction);
-    
+  const resetState = () => {
     if (decrementIndex !== null) {
       switch (decrementIndex) {
         case 0:
-          decrementShots();
+          setShotsHome((prev) => prev - 1);
           break;
         case 1:
-          decrementShotsOnNet();
+          setShotsOnNetHome((prev) => prev - 1);
+          setShotsHome((prev) => prev - 1);
           break;
         case 2:
-          decrementGoal();
+          setGoalHome((prev) => prev - 1);
+          setShotsOnNetHome((prev) => prev - 1);
+          setShotsHome((prev) => prev - 1);
           break;
         case 3:
-          decrementShotsAway();
+          setGoalAway((prev) => prev - 1); // Correct index for Goal Away
+          setShotsOnNetAway((prev) => prev - 1);
+          setShotsAway((prev) => prev - 1);
           break;
         case 4:
-          decrementShotsOnNetAway();
+          setShotsOnNetAway((prev) => prev - 1); // Correct index for Shots on Net Away
+          setShotsAway((prev) => prev - 1);
           break;
         case 5:
-          decrementGoalAway();
+          setShotsAway((prev) => prev - 1); // Correct index for Shots Away
           break;
         default:
           break;
       }
+      setShowModal(false); // Close modal after resetting state
+      setDecrementIndex(null); // Reset decrementIndex
     }
-    setShowModal(false);
-  };
-
-  const decrementShots = () => {
-    setShotsHome((prev) => prev - 1);
-    setShotsAway((prev) => prev - 1);
-    animateOpacity(0);
-  };
-
-  const decrementShotsOnNet = () => {
-    setShotsOnNetHome((prev) => prev - 1);
-    setShotsHome((prev) => prev - 1);
-    animateOpacity(1);
-  };
-
-  const decrementGoal = () => {
-    setGoalHome((prev) => prev - 1);
-    setShotsOnNetHome((prev) => prev - 1);
-    setShotsHome((prev) => prev - 1);
-    animateOpacity(2);
-  };
-
-  const decrementShotsAway = () => {
-    setShotsAway((prev) => prev - 1);
-    animateOpacity(3);
-  };
-
-  const decrementShotsOnNetAway = () => {
-    setShotsOnNetAway((prev) => prev - 1);
-    setShotsAway((prev) => prev - 1);
-    animateOpacity(4);
-  };
-
-  const decrementGoalAway = () => {
-    setGoalAway((prev) => prev - 1);
-    setShotsOnNetAway((prev) => prev - 1);
-    setShotsAway((prev) => prev - 1);
-    animateOpacity(5);
   };
   
+  
+
   const data = [
     {
       title: "Shots",
-      onPressPlus: () => handleIncrement(setShotsHome, 0),
-      onPressMinus: () => handleDecrement(0, setShotsHome), // Pass index and setter function
+      onPressPlus: () => handleIncrement(setShotsHome),
+      onPressMinus: () => handleDecrement(0), // Pass the index directly here
       value: shotsHome
     },
     {
@@ -130,9 +68,8 @@ const HockeyHome = () => {
       onPressPlus: () => {
         setShotsOnNetHome((prev) => prev + 1);
         setShotsHome((prev) => prev + 1);
-        animateOpacity(1);
       },
-      onPressMinus: () => handleDecrement(1, setShotsOnNetHome), // Pass index and setter function
+      onPressMinus: () => handleDecrement(1), // Pass the index directly here
       value: shotOnNetHome
     },
     {
@@ -141,62 +78,96 @@ const HockeyHome = () => {
         setGoalHome((prev) => prev + 1);
         setShotsOnNetHome((prev) => prev + 1);
         setShotsHome((prev) => prev + 1);
-        animateOpacity(2);
       },
-      onPressMinus: () => handleDecrement(2, setGoalHome), // Pass index and setter function
+      onPressMinus: () => handleDecrement(2), // Pass the index directly here
       value: goalHome
     },
   ];
-
+  
   const additionalData = [
-    {
-      title: "Shots",
-      onPressPlus: () => handleIncrement(setShotsAway, 3),
-      onPressMinus: () => handleDecrement(3, setShotsAway),
-      value: shotsAway
-    },
-    {
-      title: "Shots on Net",
-      onPressPlus: () => {
-        setShotsOnNetAway((prev) => prev + 1);
-        setShotsAway((prev) => prev + 1);
-        animateOpacity(4);
-      },
-      onPressMinus: () => handleDecrement(4, setShotsOnNetAway),
-      value: shotOnNetAway
-    },
     {
       title: "Goal",
       onPressPlus: () => {
         setGoalAway((prev) => prev + 1);
         setShotsOnNetAway((prev) => prev + 1);
         setShotsAway((prev) => prev + 1);
-        animateOpacity(5);
       },
-      onPressMinus: () => handleDecrement(5, setGoalAway),
+      onPressMinus: () => {
+        setDecrementIndex(3); // Set the correct index for Goal
+        setShowModal(true);
+      },
       value: goalAway
     },
+    {
+      title: "Shots on Net",
+      onPressPlus: () => {
+        setShotsOnNetAway((prev) => prev + 1);
+        setShotsAway((prev) => prev + 1);
+      },
+      onPressMinus: () => {
+        setDecrementIndex(4); // Set the correct index for Shots on Net
+        setShowModal(true);
+      },
+      value: shotOnNetAway
+    },
+    {
+      title: "Shots",
+      onPressPlus: () => handleIncrement(setShotsAway),
+      onPressMinus: () => handleDecrement(5), // Pass the correct index here
+      value: shotsAway
+    },
   ];
+  
+  
+  
+  
 
   const styles = StyleSheet.create({
+    title: {
+      fontSize: 20,
+    },
+
+    plus: {
+      fontSize: 50,
+      marginHorizontal: 30,
+    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
     },
     dataContainer: {
       flex: 1,
-      padding: 10,
     },
     navBar: {
       height: 50,
       backgroundColor: '#5c6bc0',
-      justifyContent: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       alignItems: 'center',
+      paddingHorizontal: 20,
+      width: '100%', // Set the width to fill the container
+    },
+    leftNav: {
+      flex: 1, // Take up equal space
+      alignItems: 'flex-start',
+    },
+    middleNav: {
+      flex: 1, // Take up equal space
+      alignItems: 'center', // Center the logo horizontally
+    },
+    rightNav: {
+      flex: 1, // Take up equal space
+      alignItems: 'flex-end',
     },
     navText: {
       color: '#fff',
       fontSize: 18,
     },
+    logo: {
+      height: '60%', // Take up full height
+      resizeMode: 'contain', // Ensure the image is contained within its container
+    },
+    
     section: {
       flex: 1,
       flexDirection: 'row',
@@ -206,7 +177,7 @@ const HockeyHome = () => {
       borderBottomColor: 'black',
     },
     sectionText: {
-      fontSize: 30,
+      fontSize: 50,
       marginHorizontal: 10,
     },
     numberContainer: {
@@ -246,21 +217,36 @@ const HockeyHome = () => {
             ]}
           >
             <TouchableOpacity onPress={item.onPressMinus}>
-              <Text style={styles.sectionText}>{'-'}</Text>
+              <Text style={styles.plus}>{'-'}</Text>
             </TouchableOpacity>
-            <Animated.View style={[styles.numberContainer, { opacity: animatedOpacities[index * 2] }]}>
+            <View style={styles.numberContainer}>
               <Text style={styles.sectionText}>{item.value}</Text>
-              <Text>{item.title}</Text>
-            </Animated.View>
+              <Text style={styles.title}>{item.title}</Text>
+            </View>
             <TouchableOpacity onPress={item.onPressPlus}>
-              <Text style={styles.sectionText}>{'+'}</Text>
+              <Text style={styles.plus}>{'+'}</Text>
             </TouchableOpacity>
           </View>
         ))}
       </View>
       <View style={styles.navBar}>
-        <Text style={styles.navText}>Navigation Bar</Text>
+        <View style={styles.leftNav}>
+          <TouchableOpacity onPress={() => {
+            setShowModal(true);
+          }}>
+            <Text style={styles.navText}>Home</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.middleNav}>
+          <Image source={require('./assets/hurdler.png')} style={styles.logo} />
+        </View>
+        <View style={styles.rightNav}>
+          <TouchableOpacity onPress={() => setShowModal(true)}>
+            <Text style={styles.navText}>New Game</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
       <View style={styles.dataContainer}>
         {additionalData.map((item, index) => (
           <View 
@@ -271,14 +257,14 @@ const HockeyHome = () => {
             ]}
           >
             <TouchableOpacity onPress={item.onPressMinus}>
-              <Text style={styles.sectionText}>{'-'}</Text>
+              <Text style={styles.plus}>{'-'}</Text>
             </TouchableOpacity>
-            <Animated.View style={[styles.numberContainer, { opacity: animatedOpacities[index * 2 + 3] }]}>
+            <View style={styles.numberContainer}>
               <Text style={styles.sectionText}>{item.value}</Text>
-              <Text>{item.title}</Text>
-            </Animated.View>
+              <Text style={styles.title}>{item.title}</Text>
+            </View>
             <TouchableOpacity onPress={item.onPressPlus}>
-              <Text style={styles.sectionText}>{'+'}</Text>
+              <Text style={styles.plus}>{'+'}</Text>
             </TouchableOpacity>
           </View>
         ))}
@@ -293,7 +279,7 @@ const HockeyHome = () => {
           <View style={styles.modalContent}>
             <Text>Are you sure?</Text>
             <View style={styles.modalButtons}>
-              <Button title="Yes" onPress={confirmDecrement} />
+              <Button title="Yes" onPress={resetState} />
               <Button title="No" onPress={() => setShowModal(false)} />
             </View>
           </View>
@@ -303,4 +289,4 @@ const HockeyHome = () => {
   );
 };
 
-export default HockeyHome;
+export default HockeyGame;
