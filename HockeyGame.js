@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image, TouchableHighlight } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-
+import { useFonts, JosefinSans_400Regular } from '@expo-google-fonts/josefin-sans';
 
 
 const HockeyGame = ({ navigation }) => {
@@ -17,26 +17,20 @@ const HockeyGame = ({ navigation }) => {
   const [decrementIndex, setDecrementIndex] = useState(null);
   
 
-  // let [fontsLoaded] = useFonts({
-  //   'JosefinSans-Regular': require('./assets/JosefinSans-Regular.ttf'),
-  //   'JosefinSans-Bold': require('./assets/JosefinSans-Bold.ttf'),
-  //   // Add more weights and styles as needed
-  // });
-
-  // if (!fontsLoaded) {
-  //   return <AppLoading />;
-  // } else {
-  //   // Your component's JSX
-  //   return (
-  //     <View style={styles.container}>
-  //       {/* Your content with Josefin Sans font */}
-  //     </View>
-  //   );
-  // }
-
+  const [fontsLoaded] = useFonts({
+    JosefinSans_400Regular,
+  });
+  
+  if (!fontsLoaded) {
+    return null; // Render nothing until the font is loaded
+  }
   const handleIncrement = (setter) => {
     setter((prev) => prev + 1);
   };
+
+  const test = () => {
+    console.log("hi ho")
+  }
 
   const handleDecrement = (index) => {
     setDecrementIndex(index);
@@ -174,10 +168,12 @@ const HockeyGame = ({ navigation }) => {
   const styles = StyleSheet.create({
     title: {
       fontSize: 20,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     plus: {
       fontSize: 50,
       marginHorizontal: 30,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     container: {
       flex: 1,
@@ -200,7 +196,9 @@ const HockeyGame = ({ navigation }) => {
       borderTopColor: '#f1592a',
     },
     homeText: {
-      fontSize: 16
+      fontSize: 16,
+      marginLeft: 20,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     leftNav: {
       flex: 1,
@@ -224,13 +222,15 @@ const HockeyGame = ({ navigation }) => {
     navText: {
       color: '#fff',
       fontSize: 18,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     logo: {
-      height: 30, // Set a fixed height for the logo
+      height: 30, 
       resizeMode: 'contain',
+      marginLeft: 35,
     },
     logoTextImage: {
-      height: 14, // Set a fixed height for the logo text image
+      height: 14, 
       resizeMode: 'contain',
 
     },
@@ -256,19 +256,23 @@ const HockeyGame = ({ navigation }) => {
       fontSize: 50,
       marginHorizontal: 10,
       color: 'white',
+      fontFamily: 'JosefinSans_400Regular', 
     },
     plusAway: {
       fontSize: 50,
       marginHorizontal: 30,
       color: 'white',
+      fontFamily: 'JosefinSans_400Regular', 
     },
     titleAway: {
       color: 'white',
       fontSize: 20,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     sectionText: {
       fontSize: 50,
       marginHorizontal: 10,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     numberContainer: {
       alignItems: 'center',
@@ -300,6 +304,7 @@ const HockeyGame = ({ navigation }) => {
     areYouSure: {
       fontSize: 30,
       textAlign: 'center',
+      fontFamily: 'JosefinSans_400Regular', 
     },
     areYouSureCopy: {},
     yesButtonRed: {
@@ -308,9 +313,11 @@ const HockeyGame = ({ navigation }) => {
       paddingHorizontal: 20,
       borderRadius: 5,
       marginHorizontal: 10,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     buttonText: {
       color: 'white',
+      fontFamily: 'JosefinSans_400Regular', 
     },
     yesButton: {
       backgroundColor: '#f1592a',
@@ -318,18 +325,22 @@ const HockeyGame = ({ navigation }) => {
       paddingHorizontal: 20,
       borderRadius: 5,
       marginHorizontal: 10,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     noButton: {
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
       marginHorizontal: 10,
+      fontFamily: 'JosefinSans_400Regular', 
     },
     buttonTextNoNormal: {
       color: 'black',
+      fontFamily: 'JosefinSans_400Regular', 
     },
     buttonTextYes: {
       color: 'white',
+      fontFamily: 'JosefinSans_400Regular', 
     },
     backgroundImage: {
       flex: 1,
@@ -338,10 +349,6 @@ const HockeyGame = ({ navigation }) => {
   });
 
   return (
-    // <ImageBackground
-    //   source={require('./assets/bg.png')} // Replace with your image path
-    //   style={styles.backgroundImage}
-    // >
       <View style={styles.container}>
         <StatusBar style="dark" color="red" />
         <View style={styles.dataContainer}>
@@ -369,12 +376,15 @@ const HockeyGame = ({ navigation }) => {
         <View style={styles.navBar}>
           <View style={styles.leftNav}>
             <TouchableOpacity onPress={() => setShowHomeModal(true)}>
-              <Text style={styles.homeText}>Home</Text>
+            {/* <TouchableOpacity onPress={()=>test()}> */}
+              {/* <Text style={styles.homeText}>Home</Text> */}
             </TouchableOpacity>
           </View>
           <View style={styles.middleNav}>
+          <TouchableOpacity onPress={() => setShowHomeModal(true)}>
             <Image source={require('./assets/logo.png')} style={styles.logo} />
             <Image source={require('./assets/logo-text-image.png')} style={styles.logoTextImage} />
+            </TouchableOpacity>
           </View>
           <View style={styles.rightNav}>
             <TouchableOpacity onPress={() => setShowNewGameModal(true)}>
