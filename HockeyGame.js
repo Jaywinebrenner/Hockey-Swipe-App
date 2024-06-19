@@ -168,7 +168,7 @@ const HockeyGame = ({ navigation }) => {
       fontFamily: 'JosefinSans_400Regular', 
     },
     plus: {
-      fontSize: 50,
+      fontSize: 60,
       marginHorizontal: 30,
       fontFamily: 'JosefinSans_400Regular', 
     },
@@ -253,13 +253,13 @@ const HockeyGame = ({ navigation }) => {
       backgroundColor: '#4b4848',
     },
     sectionTextAway: {
-      fontSize: 50,
+      fontSize: 60,
       marginHorizontal: 10,
       color: 'white',
       fontFamily: 'JosefinSans_400Regular', 
     },
     plusAway: {
-      fontSize: 50,
+      fontSize: 60,
       marginHorizontal: 30,
       color: 'white',
       fontFamily: 'JosefinSans_400Regular', 
@@ -270,7 +270,7 @@ const HockeyGame = ({ navigation }) => {
       fontFamily: 'JosefinSans_400Regular', 
     },
     sectionText: {
-      fontSize: 50,
+      fontSize: 60,
       marginHorizontal: 10,
       fontFamily: 'JosefinSans_400Regular', 
     },
