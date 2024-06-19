@@ -60,17 +60,17 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 200,
-    height: 100, // Ensures proper display
+    height: 100, 
     resizeMode: 'contain',
     shadowColor: '#000',
     shadowOffset: { width: 4, height: 7 },
     shadowOpacity: 0.8,
     shadowRadius: 7,
-    elevation: 8, // Android shadow property
+    elevation: 8,
   },
   logoText: {
     width: '80%',
-    height: 100, // Ensures proper display
+    height: 100, 
     resizeMode: 'contain',
   },
   lowerBand: {

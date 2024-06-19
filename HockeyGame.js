@@ -187,10 +187,10 @@ const HockeyGame = ({ navigation }) => {
       paddingHorizontal: 20,
       width: '100%',
       borderBottomWidth: 3,
-      borderBottomColor: '#f1592a',
+      borderBottomColor: '#00AEEF',
       borderTopWidth: 3,
-      borderTopColor: '#f1592a',
-      backgroundColor: 'transparent'
+      borderTopColor: '#00AEEF',
+      backgroundColor: '#00AEEF'
     },
     homeText: {
       fontSize: 16,
@@ -240,8 +240,8 @@ const HockeyGame = ({ navigation }) => {
       justifyContent: 'space-between',
       alignItems: 'center',
       borderBottomWidth: 3,
-      borderBottomColor: '#f1592a',
-      backgroundColor: '#E7E7EA'
+      borderBottomColor: '#00AEEF',
+      backgroundColor: 'white'
     },
     sectionAway: {
       flex: 1,
@@ -249,23 +249,23 @@ const HockeyGame = ({ navigation }) => {
       justifyContent: 'space-between',
       alignItems: 'center',
       borderBottomWidth: 3,
-      borderBottomColor: '#F3F3F4',
-      backgroundColor: '#4b4848',
+      borderBottomColor: '#00AEEF',
+      backgroundColor: 'white'
     },
     sectionTextAway: {
       fontSize: 60,
       marginHorizontal: 10,
-      color: 'white',
+      color: '#00AEEF',
       fontFamily: 'JosefinSans_400Regular', 
     },
     plusAway: {
       fontSize: 60,
       marginHorizontal: 30,
-      color: 'white',
+      color: '#00AEEF',
       fontFamily: 'JosefinSans_400Regular', 
     },
     titleAway: {
-      color: 'white',
+      color: '#00AEEF',
       fontSize: 20,
       fontFamily: 'JosefinSans_400Regular', 
     },
@@ -375,13 +375,13 @@ const HockeyGame = ({ navigation }) => {
           ))}
         </View>
 
-        <ImageBackground source={require('./assets/goalkeeper/blue-bg-net-iphone.png')} style={styles.background}>
+        {/* <ImageBackground source={require('./assets/goalkeeper/blue-bg-net-iphone.png')} style={styles.background}> */}
           <View style={styles.navBar} source={require('./assets/goalkeeper/blue-bg-net-iphone.png')}>
             <View style={styles.leftNav}>
             </View>
             <View style={styles.middleNav}>
             <TouchableOpacity onPress={() => setShowHomeModal(true)}>
-              <Image source={require('./assets/goalkeeper/logo.png')} style={styles.logo} />
+              <Image source={require('./assets/goalkeeper/goalkeeper-white.png')} style={styles.logo} />
               </TouchableOpacity>
             </View>
             <View style={styles.rightNav}>
@@ -390,7 +390,7 @@ const HockeyGame = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-        </ImageBackground>
+        {/* </ImageBackground> */}
         <View style={styles.dataContainer}>
           {additionalData.map((item, index) => (
             <View 
