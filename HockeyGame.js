@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image, ImageBackground } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts, JosefinSans_400Regular } from '@expo-google-fonts/josefin-sans';
 
@@ -22,15 +22,12 @@ const HockeyGame = ({ navigation }) => {
   });
   
   if (!fontsLoaded) {
-    return null; // Render nothing until the font is loaded
+    return null; 
   }
   const handleIncrement = (setter) => {
     setter((prev) => prev + 1);
   };
 
-  const test = () => {
-    console.log("hi ho")
-  }
 
   const handleDecrement = (index) => {
     setDecrementIndex(index);
@@ -105,7 +102,7 @@ const HockeyGame = ({ navigation }) => {
 
   const data = [
     {
-      title: "Shots",
+      title: "Shot Attempts",
       onPressPlus: () => handleIncrement(setShotsHome),
       onPressMinus: () => handleDecrement(0),
       value: shotsHome
@@ -158,7 +155,7 @@ const HockeyGame = ({ navigation }) => {
       value: shotOnNetAway
     },
     {
-      title: "Shots",
+      title: "Shot Attempts",
       onPressPlus: () => handleIncrement(setShotsAway),
       onPressMinus: () => handleDecrement(5),
       value: shotsAway
@@ -184,7 +181,6 @@ const HockeyGame = ({ navigation }) => {
     },
     navBar: {
       height: 70,
-      backgroundColor: 'white',
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -194,6 +190,7 @@ const HockeyGame = ({ navigation }) => {
       borderBottomColor: '#f1592a',
       borderTopWidth: 3,
       borderTopColor: '#f1592a',
+      backgroundColor: 'transparent'
     },
     homeText: {
       fontSize: 16,
@@ -207,7 +204,9 @@ const HockeyGame = ({ navigation }) => {
     middleNav: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center', // Center content vertically
+      justifyContent: 'center', 
+      backgroundColor: 'transparent',
+      marginRight: 30
     },
     
     rightNav: {
@@ -217,7 +216,7 @@ const HockeyGame = ({ navigation }) => {
     arrow: {
       height: 33,
       width: 33,
-      marginRight: 30
+      // marginRight: 30
     },
     navText: {
       color: '#fff',
@@ -228,6 +227,7 @@ const HockeyGame = ({ navigation }) => {
       height: 30, 
       resizeMode: 'contain',
       marginLeft: 35,
+      textAlign: 'center'
     },
     logoTextImage: {
       height: 14, 
@@ -241,7 +241,7 @@ const HockeyGame = ({ navigation }) => {
       alignItems: 'center',
       borderBottomWidth: 3,
       borderBottomColor: '#f1592a',
-      backgroundColor: '#F3F3F4'
+      backgroundColor: '#E7E7EA'
     },
     sectionAway: {
       flex: 1,
@@ -349,6 +349,7 @@ const HockeyGame = ({ navigation }) => {
   });
 
   return (
+    <ImageBackground  style={styles.backgroundImage}>
       <View style={styles.container}>
         <StatusBar style="dark" color="red" />
         <View style={styles.dataContainer}>
@@ -373,25 +374,23 @@ const HockeyGame = ({ navigation }) => {
             </View>
           ))}
         </View>
-        <View style={styles.navBar}>
-          <View style={styles.leftNav}>
+
+        <ImageBackground source={require('./assets/goalkeeper/blue-bg-net-iphone.png')} style={styles.background}>
+          <View style={styles.navBar} source={require('./assets/goalkeeper/blue-bg-net-iphone.png')}>
+            <View style={styles.leftNav}>
+            </View>
+            <View style={styles.middleNav}>
             <TouchableOpacity onPress={() => setShowHomeModal(true)}>
-            {/* <TouchableOpacity onPress={()=>test()}> */}
-              {/* <Text style={styles.homeText}>Home</Text> */}
-            </TouchableOpacity>
+              <Image source={require('./assets/goalkeeper/logo.png')} style={styles.logo} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rightNav}>
+              <TouchableOpacity onPress={() => setShowNewGameModal(true)}>
+                <Image source={require('./assets/goalkeeper/refresh.png')} style={styles.arrow} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.middleNav}>
-          <TouchableOpacity onPress={() => setShowHomeModal(true)}>
-            <Image source={require('./assets/logo.png')} style={styles.logo} />
-            <Image source={require('./assets/logo-text-image.png')} style={styles.logoTextImage} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rightNav}>
-            <TouchableOpacity onPress={() => setShowNewGameModal(true)}>
-              <Image source={require('./assets/red-arrow.png')} style={styles.arrow} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        </ImageBackground>
         <View style={styles.dataContainer}>
           {additionalData.map((item, index) => (
             <View 
@@ -483,7 +482,7 @@ const HockeyGame = ({ navigation }) => {
           </View>
         </Modal>
       </View>
-    // </ImageBackground>
+   </ImageBackground>
   );
 };
 

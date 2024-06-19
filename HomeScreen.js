@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Statu
 
 const HomeScreen = ({ navigation }) => {
   return (
-    <ImageBackground source={require('./assets/bg.png')} style={styles.background}>
+    <ImageBackground source={require('./assets/goalkeeper/blue-bg-net-iphone.png')} style={styles.background}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
       <View style={styles.container}>
-        <Text style={styles.text}>www.athletIQ.com</Text>
+        <View style={styles.upperBand}>
+          <Text style={styles.upperBandText}>WWW. HURDLERSTUDIOS .COM</Text>
+        </View>
         <View style={styles.middleContainer}>
-          <Image source={require('./assets/logo.png')} style={styles.logo} />
-          <Image source={require('./assets/logo-text-image.png')} style={styles.logoText} />
+          <Image source={require('./assets/goalkeeper/logo.png')}  style={styles.logoText} />
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('HockeyGame')}
@@ -18,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.lowerBand}>
-          <Image source={require('./assets/hurdler.png')} style={styles.hurdler} />
+          <Image source={require('./assets/goalkeeper/hurdler.png')} style={styles.hurdler} />
         </View>
       </View>
     </ImageBackground>
@@ -76,11 +77,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 70
+    marginBottom: 50
+  },
+  upperBand: {
+    backgroundColor: 'white',
+  },
+  upperBandText: {
+    color: "charcoal",
+    textAlign: 'center',
+    padding: 16,
+    fontFamily: 'JosefinSans_400Regular', 
+    letterSpacing: 2, 
   },
   hurdler: {
     width: 100, 
-    height: 50, 
+    height: 70, 
     resizeMode: 'contain',
 
   },
