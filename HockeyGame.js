@@ -53,37 +53,30 @@ const HockeyGame = ({ navigation }) => {
     if (decrementIndex !== null) {
       switch (decrementIndex) {
         case 0:
-          setShotsHome((prev) => prev - 1);
+          setShotsHome((prev) => Math.max(0, prev - 1));
           break;
         case 1:
-          setShotsOnNetHome((prev) => prev - 1);
-          setShotsHome((prev) => prev - 1);
+          setShotsOnNetHome((prev) => Math.max(0, prev - 1));
+          setShotsHome((prev) => Math.max(0, prev - 1));
           break;
         case 2:
-          setGoalHome((prev) => prev - 1);
-          setShotsOnNetHome((prev) => prev - 1);
-          setShotsHome((prev) => prev - 1);
+          setGoalHome((prev) => Math.max(0, prev - 1));
+          setShotsOnNetHome((prev) => Math.max(0, prev - 1));
+          setShotsHome((prev) => Math.max(0, prev - 1));
           break;
         case 3:
-          setGoalAway((prev) => prev - 1);
-          setShotsOnNetAway((prev) => prev - 1);
-          setShotsAway((prev) => prev - 1);
+          setGoalAway((prev) => Math.max(0, prev - 1));
+          setShotsOnNetAway((prev) => Math.max(0, prev - 1));
+          setShotsAway((prev) => Math.max(0, prev - 1));
           break;
         case 4:
-          setShotsOnNetAway((prev) => prev - 1);
-          setShotsAway((prev) => prev - 1);
+          setShotsOnNetAway((prev) => Math.max(0, prev - 1));
+          setShotsAway((prev) => Math.max(0, prev - 1));
           break;
         case 5:
-          setShotsAway((prev) => prev - 1);
+          setShotsAway((prev) => Math.max(0, prev - 1));
           break;
         case 6:
-          setGoalHome(0);
-          setShotsOnNetHome(0);
-          setShotsHome(0);
-          setGoalAway(0);
-          setShotsOnNetAway(0);
-          setShotsAway(0);
-          break;
         case 7:
           setGoalHome(0);
           setShotsOnNetHome(0);
@@ -99,6 +92,7 @@ const HockeyGame = ({ navigation }) => {
       setDecrementIndex(null);
     }
   };
+  
 
   const data = [
     {

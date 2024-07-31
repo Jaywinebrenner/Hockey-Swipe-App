@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'space-between', // Ensures the lowerBand is at the bottom
-    paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight : 100, // Ensure content is not hidden behind the status bar
+    justifyContent: 'space-between',
+    paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight : 100, 
   },
   text: {
     fontSize: 20,
